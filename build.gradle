@@ -1,6 +1,7 @@
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2025.3.2"
+    id "com.diffplug.spotless" version "6.20.0"
 }
 
 java {
@@ -8,7 +9,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-def ROBOT_MAIN_CLASS = "frc.robot.Main"
+def ROBOT_MAIN_CLASS = "com.team973.frc2025.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.
@@ -102,3 +103,39 @@ wpi.java.configureTestTasks(test)
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
+
+spotless {
+  java {
+    target fileTree('.') {
+      include '**/*.java'
+      exclude '**/build/**', '**/build-*/**'
+    }
+    toggleOffOn()
+    googleJavaFormat()
+    removeUnusedImports()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
+  format 'xml', {
+    target fileTree('.') {
+      include '**/*.xml'
+      exclude '**/build/**', '**/build-*/**'
+    }
+    eclipseWtp('xml')
+    trimTrailingWhitespace()
+    indentWithSpaces(2)
+    endWithNewline()
+  }
+  format 'misc', {
+    target fileTree('.') {
+      include '**/*.md', '**/.gitignore'
+      exclude '**/build/**', '**/build-*/**'
+    }
+    trimTrailingWhitespace()
+    indentWithSpaces(2)
+    endWithNewline()
+  }
+}
+
+project.compileJava.dependsOn spotlessApply
+project.compileJava.options.compilerArgs << "-Xlint:all,-serial,-processing"
