@@ -17,6 +17,33 @@ public class RobotInfo {
   public static final String ROBORIO_CANBUS = "";
 
   public static final DriveInfo DRIVE_INFO = new DriveInfo();
+  public static final ElevatorInfo ELEVATOR_INFO = new ElevatorInfo();
+
+  public static class ElevatorInfo {
+    public final int MOTOR_ID = 20;
+
+    public final double MOTOR_GEAR_RATIO = 10.0 / 56.0;
+    public final double MOTOR_ROT_TO_HEIGHT_METERS = MOTOR_GEAR_RATIO * 5.0 * 36.0 * 100.0;
+
+    public final double ELEVATOR_KS = 0.0;
+    public final double ELEVATOR_KV = 0.15;
+    public final double ELEVATOR_KA = 0.01;
+    public final double ELEVATOR_KP = 4.0;
+    public final double ELEVATOR_KI = 0.0;
+    public final double ELEVATOR_KD = 0.0;
+
+    public final double ELEVATOR_MOTION_MAGIC_CRUISE_VELOCITY = 65.0;
+    public final double ELEVATOR_MOTION_MAGIC_ACCELERATION = 390.0;
+    public final double ELEVATOR_MOTION_MAGIC_JERK = 2000.0;
+
+    public final double ELEVATOR_VOLTAGE_CLOSED_LOOP_RAMP_PERIOD = 0.00;
+
+    public final double STATOR_CURRENT_LIMIT = 60.0;
+    public final double SUPPLY_CURRENT_LIMIT = 40.0;
+
+    public final double PEAK_FORWARD_VOLTAGE = 12.0;
+    public final double PEAK_REVERSE_VOLTAGE = -12.0;
+  }
 
   public static class DriveInfo {
     public final int STATUS_SIGNAL_FREQUENCY = 200;
