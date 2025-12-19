@@ -2,7 +2,9 @@ package com.team973.lib.util;
 
 import java.util.EnumMap;
 
-public class StateMap<K extends Enum<K>> extends EnumMap<K, SubsystemState> {
+public class StateMap<K extends Enum<K>> {
+  private final EnumMap<K, SubsystemState> m_enumMap;
+
   private class EmptySubsystemState implements SubsystemState {
     public void init() {}
 
@@ -30,23 +32,23 @@ public class StateMap<K extends Enum<K>> extends EnumMap<K, SubsystemState> {
   }
 
   public StateMap(Class<K> stateType) {
-    super(stateType);
+    m_enumMap = new EnumMap<>(stateType);
 
     for (K key : stateType.getEnumConstants()) {
-      put(key);
+      m_enumMap.put(key, new EmptySubsystemState());
     }
   }
 
   @SuppressWarnings("unchecked")
   public StateMap(Class<K> stateType, Entry<K>... entries) {
-    super(stateType);
+    m_enumMap = new EnumMap<>(stateType);
 
     for (Entry<K> e : entries) {
-      put(e.getKey(), e.getState());
+      m_enumMap.put(e.getKey(), e.getState());
     }
   }
 
-  private void put(K state) {
-    put(state, new EmptySubsystemState());
+  public SubsystemState get(K key) {
+    return m_enumMap.get(key);
   }
 }
