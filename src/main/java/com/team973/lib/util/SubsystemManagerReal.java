@@ -3,12 +3,15 @@ package com.team973.lib.util;
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.frc2025.subsystems.DriveController;
 import com.team973.frc2025.subsystems.swerve.SwerveModule;
+import com.team973.frc2025.subsystems.turret.Turret;
+import com.team973.frc2025.subsystems.turret.TurretIO;
 import com.team973.lib.devices.GreyPigeon;
 import com.team973.lib.devices.GreyPigeonIO;
 
 public class SubsystemManagerReal extends SubsystemManager {
   private final GreyPigeonIO m_pigeon;
   private final DriveController m_driveController;
+  private final TurretIO m_turret;
 
   public SubsystemManagerReal(Logger logger) {
     super(logger);
@@ -33,6 +36,8 @@ public class SubsystemManagerReal extends SubsystemManager {
             new SwerveModule(
                 3, RobotInfo.DRIVE_INFO.BACK_RIGHT_CONSTANTS, driveLogger.subLogger("swerve/mod3")),
             m_pigeon);
+
+    m_turret = new Turret(logger.subLogger("turret"));
   }
 
   public GreyPigeonIO getPigeon() {
@@ -41,5 +46,9 @@ public class SubsystemManagerReal extends SubsystemManager {
 
   public DriveController getDriveController() {
     return m_driveController;
+  }
+
+  public TurretIO getTurret() {
+    return m_turret;
   }
 }
