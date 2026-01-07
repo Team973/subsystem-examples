@@ -23,19 +23,17 @@ public class RobotInfo {
   public static class TurretInfo {
     public final int MOTOR_ID = 20;
 
-    public final double MOTOR_GEAR_RATIO = 0.0;
-
-    public final double RADIUS_METERS = 0.2;
+    public final double MOTOR_GEAR_RATIO = ((5.0 / 1.0) * (128.0 / 10.0));
 
     public final double TURRET_KS = 0.0;
     public final double TURRET_KV = 0.0;
     public final double TURRET_KA = 0.0;
-    public final double TURRET_KP = 0.0;
+    public final double TURRET_KP = 2.0;
     public final double TURRET_KI = 0.0;
     public final double TURRET_KD = 0.0;
 
-    public final double TURRET_MOTION_MAGIC_CRUISE_VELOCITY = 0.0;
-    public final double TURRET_MOTION_MAGIC_ACCELERATION = 0.0;
+    public final double TURRET_MOTION_MAGIC_CRUISE_VELOCITY = 10.0;
+    public final double TURRET_MOTION_MAGIC_ACCELERATION = 10.0;
     public final double TURRET_MOTION_MAGIC_JERK = 0.0;
 
     public final double TURRET_VOLTAGE_CLOSED_LOOP_RAMP_PERIOD = 0.0;

@@ -76,11 +76,11 @@ public class Turret extends TurretIO {
   }
 
   public double degToMotorRotations(double deg) {
-    return deg / m_turretInfo.MOTOR_GEAR_RATIO;
+    return (deg / 360.0) * m_turretInfo.MOTOR_GEAR_RATIO;
   }
 
   private double motorRotationsToDeg(double motorPostion) {
-    return motorPostion * m_turretInfo.MOTOR_GEAR_RATIO;
+    return (motorPostion / m_turretInfo.MOTOR_GEAR_RATIO) * 360.0;
   }
 
   @Override
