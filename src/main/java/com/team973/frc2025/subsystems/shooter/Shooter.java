@@ -1,6 +1,7 @@
 package com.team973.frc2025.subsystems.shooter;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.team973.frc2025.shared.RobotInfo;
@@ -13,16 +14,20 @@ public class Shooter extends ShooterIO {
 
   private final Logger m_logger;
 
-  protected final GreyTalonFX m_motor;
+  protected final GreyTalonFX m_leftMotor;
+  protected final GreyTalonFX m_rightMotor;
 
   private double m_targetVelocityRPS;
   private double m_manualInput;
 
   public Shooter(Logger logger) {
     m_logger = logger;
-    m_motor =
+    m_leftMotor =
         new GreyTalonFX(
-            m_shooterInfo.MOTOR_ID, RobotInfo.CANIVORE_CANBUS, m_logger.subLogger("motorRight"));
+            m_shooterInfo.LEFT_MOTOR_ID, RobotInfo.CANIVORE_CANBUS, m_logger.subLogger("motorLeft"));
+    m_rightMotor =
+        new GreyTalonFX(
+            m_shooterInfo.RIGHT_MOTOR_ID, RobotInfo.CANIVORE_CANBUS, m_logger.subLogger("motorRight"));
 
     TalonFXConfiguration motorConfig = new TalonFXConfiguration();
 
@@ -48,11 +53,13 @@ public class Shooter extends ShooterIO {
     motorConfig.Voltage.PeakForwardVoltage = m_shooterInfo.PEAK_FORWARD_VOLTAGE;
     motorConfig.Voltage.PeakReverseVoltage = m_shooterInfo.PEAK_REVERSE_VOLTAGE;
 
-    m_motor.setConfig(motorConfig);
-    m_motor.setPosition(0.0);
+    m_leftMotor.setConfig(motorConfig);
+    m_leftMotor.setPosition(0.0);
 
     m_targetVelocityRPS = 0.0;
     m_manualInput = 0.0;
+
+    m_rightMotor.setControl(new Follower(m_shooterInfo.LEFT_MOTOR_ID, true));
   }
 
   @Override
@@ -62,7 +69,7 @@ public class Shooter extends ShooterIO {
 
   @Override
   public GreyTalonFX getMotor() {
-    return m_motor;
+    return m_leftMotor;
   }
 
   @Override
@@ -91,9 +98,9 @@ public class Shooter extends ShooterIO {
 
   @Override
   public void log() {
-    m_motor.log();
+    m_leftMotor.log();
 
-    m_logger.log("currentVelocityRPS", m_motor.getVelocity().getValueAsDouble());
+    m_logger.log("currentVelocityRPS", m_leftMotor.getVelocity().getValueAsDouble());
     m_logger.log("targetVelocityRPS", m_targetVelocityRPS);
     m_logger.log("manualInput", m_manualInput);
 

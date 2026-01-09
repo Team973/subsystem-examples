@@ -21,7 +21,8 @@ public class RobotInfo {
   public static final ShooterInfo SHOOTER_INFO = new ShooterInfo();
 
   public static class ShooterInfo {
-    public final int MOTOR_ID = 20;
+    public final int LEFT_MOTOR_ID = 59;
+    public final int RIGHT_MOTOR_ID = 23;
 
     public final double MOTOR_GEAR_RATIO = 40.0 / 18.0;
 
@@ -34,13 +35,13 @@ public class RobotInfo {
 
     public final double SHOOTER_VOLTAGE_CLOSED_LOOP_RAMP_PERIOD = 0.0;
 
-    public final double STATOR_CURRENT_LIMIT = 60.0;
-    public final double SUPPLY_CURRENT_LIMIT = 40.0;
+    public final double STATOR_CURRENT_LIMIT = 20.0;
+    public final double SUPPLY_CURRENT_LIMIT = 30.0;
 
-    public final double PEAK_FORWARD_VOLTAGE = 12.0;
-    public final double PEAK_REVERSE_VOLTAGE = -12.0;
+    public final double PEAK_FORWARD_VOLTAGE = 1.0;
+    public final double PEAK_REVERSE_VOLTAGE = -1.0;
 
-    public final double MANUAL_INPUT_TO_VOLTS = 12.0;
+    public final double MANUAL_INPUT_TO_VOLTS = 1.0;
 
     public final double PRESET_ONE = 100;
     public final double PRESET_TWO = -100;

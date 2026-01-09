@@ -25,7 +25,7 @@ public class ShooterSim extends Shooter {
                 DCMotor.getKrakenX60(1), 0.002, m_shooterInfo.MOTOR_GEAR_RATIO),
             DCMotor.getKrakenX60(1));
 
-    m_motorSimState = m_motor.getSimState();
+    m_motorSimState = m_leftMotor.getSimState();
     m_lastVelocityRPM = m_sim.getAngularVelocityRPM();
     m_lastTimeSec = Timer.getFPGATimestamp();
   }
