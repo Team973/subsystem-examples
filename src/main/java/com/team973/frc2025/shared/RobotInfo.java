@@ -23,7 +23,7 @@ public class RobotInfo {
   public static class TurretInfo {
     public final int MOTOR_ID = 20;
 
-    public final double MOTOR_GEAR_RATIO = ((5.0 / 1.0) * (128.0 / 10.0));
+    public final double MOTOR_GEAR_RATIO = 574.436; // ((5.0 / 1.0) * (128.0 / 10.0))
 
     public final double TURRET_KS = 0.0;
     public final double TURRET_KV = 0.0;
@@ -38,17 +38,17 @@ public class RobotInfo {
 
     public final double TURRET_VOLTAGE_CLOSED_LOOP_RAMP_PERIOD = 0.0;
 
-    public final double STATOR_CURRENT_LIMIT = 60.0;
-    public final double SUPPLY_CURRENT_LIMIT = 40.0;
+    public final double STATOR_CURRENT_LIMIT = 15.0;
+    public final double SUPPLY_CURRENT_LIMIT = 10.0;
 
-    public final double PEAK_FORWARD_VOLTAGE = 12.0;
-    public final double PEAK_REVERSE_VOLTAGE = -12.0;
+    public final double PEAK_FORWARD_VOLTAGE = 2.0;
+    public final double PEAK_REVERSE_VOLTAGE = -2.0;
 
-    public final double MANUAL_INPUT_TO_VOLTS = 12.0;
+    public final double MANUAL_INPUT_TO_VOLTS = 2.0;
 
     public final double PRESET_ONE = 0.0;
     public final double PRESET_TWO = 90.0;
-    public final double PRESET_THREE = -150.0;
+    public final double PRESET_THREE = -40.0;
   }
 
   public static class DriveInfo {

@@ -4,7 +4,6 @@
 
 package com.team973.frc2025;
 
-import com.team973.frc2025.subsystems.DriveController;
 import com.team973.frc2025.subsystems.turret.TurretIO;
 import com.team973.lib.devices.GreyPigeonIO;
 import com.team973.lib.util.AllianceCache;
@@ -21,7 +20,7 @@ public class Robot extends TimedRobot {
   private final SubsystemManager m_subsystemManager = SubsystemManager.init(m_logger);
 
   private final GreyPigeonIO m_pigeon = m_subsystemManager.getPigeon();
-  private final DriveController m_driveController = m_subsystemManager.getDriveController();
+  // private final DriveController m_driveController = m_subsystemManager.getDriveController();
   private final TurretIO m_turret = m_subsystemManager.getTurret();
 
   private final Joystick m_driverStick =
@@ -30,23 +29,23 @@ public class Robot extends TimedRobot {
       new Joystick(1, Joystick.Type.XboxController, m_logger.subLogger("coDriverStick"));
 
   private void syncSensors() {
-    m_driveController.syncSensors();
+    // m_driveController.syncSensors();
     m_turret.syncSensors();
   }
 
   private void updateSubsystems() {
-    m_driveController.update();
+    // m_driveController.update();
     m_turret.update();
   }
 
   private void resetSubsystems() {
-    m_driveController.reset();
+    // m_driveController.reset();
     m_turret.reset();
   }
 
   private void log() {
     m_subsystemManager.log();
-    m_driveController.log();
+    // m_driveController.log();
     m_turret.log();
   }
 
@@ -56,7 +55,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     resetSubsystems();
-    m_driveController.startOdometrey();
+    // m_driveController.startOdometrey();
   }
 
   @Override
@@ -73,8 +72,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_driveController.setRobotIsAutonomous(false);
-    m_driveController.setControllerOption(DriveController.ControllerOption.DriveWithJoysticks);
+    // m_driveController.setRobotIsAutonomous(false);
+    // m_driveController.setControllerOption(DriveController.ControllerOption.DriveWithJoysticks);
   }
 
   @Override
@@ -96,12 +95,12 @@ public class Robot extends TimedRobot {
       allianceScalar = -1.0;
     }
 
-    m_driveController
-        .getDriveWithJoysticks()
-        .updateInput(
-            -allianceScalar * m_driverStick.getLeftYAxis() * 0.7,
-            allianceScalar * m_driverStick.getLeftXAxis() * 0.7,
-            m_driverStick.getRightXAxis() * 0.8);
+    // m_driveController
+    //     .getDriveWithJoysticks()
+    //     .updateInput(
+    //         -allianceScalar * m_driverStick.getLeftYAxis() * 0.7,
+    //         allianceScalar * m_driverStick.getLeftXAxis() * 0.7,
+    //         m_driverStick.getRightXAxis() * 0.8);
 
     if (m_coDriverStick.getAButtonPressed()) {
       m_turret.setTargetPreset(TurretIO.Preset.One);
