@@ -2,6 +2,8 @@ package com.team973.lib.util;
 
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.frc2025.subsystems.DriveController;
+import com.team973.frc2025.subsystems.elevator.ElevatorIO;
+import com.team973.frc2025.subsystems.elevator.ElevatorSim;
 import com.team973.frc2025.subsystems.swerve.SwerveModuleSim;
 import com.team973.lib.devices.GreyPigeonIO;
 import com.team973.lib.devices.GreyPigeonSim;
@@ -12,6 +14,7 @@ public class SubsystemManagerSim extends SubsystemManager {
   private final SwerveDriveSimulation m_swerveDriveSimulation;
   private final GreyPigeonIO m_pigeon;
   private final DriveController m_driveController;
+  private final ElevatorIO m_elevator;
 
   public SubsystemManagerSim(Logger logger) {
     super(logger);
@@ -56,6 +59,8 @@ public class SubsystemManagerSim extends SubsystemManager {
                 RobotInfo.DRIVE_INFO.BACK_RIGHT_CONSTANTS,
                 driveLogger.subLogger("swerve/mod3")),
             m_pigeon);
+
+    m_elevator = new ElevatorSim(logger.subLogger("elevator"));
   }
 
   public GreyPigeonIO getPigeon() {
@@ -64,6 +69,10 @@ public class SubsystemManagerSim extends SubsystemManager {
 
   public DriveController getDriveController() {
     return m_driveController;
+  }
+
+  public ElevatorIO getElevator() {
+    return m_elevator;
   }
 
   @Override
