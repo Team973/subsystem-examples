@@ -18,6 +18,35 @@ public class RobotInfo {
 
   public static final DriveInfo DRIVE_INFO = new DriveInfo();
 
+  public static final ShooterInfo SHOOTER_INFO = new ShooterInfo();
+
+  public static class ShooterInfo {
+    public final int MOTOR_ID = 20;
+
+    public final double MOTOR_GEAR_RATIO = 40.0 / 18.0;
+
+    public final double SHOOTER_KS = 0.0;
+    public final double SHOOTER_KV = 0.0;
+    public final double SHOOTER_KA = 0.0;
+    public final double SHOOTER_KP = 0.1;
+    public final double SHOOTER_KI = 0.0;
+    public final double SHOOTER_KD = 0.0;
+
+    public final double SHOOTER_VOLTAGE_CLOSED_LOOP_RAMP_PERIOD = 0.0;
+
+    public final double STATOR_CURRENT_LIMIT = 60.0;
+    public final double SUPPLY_CURRENT_LIMIT = 40.0;
+
+    public final double PEAK_FORWARD_VOLTAGE = 12.0;
+    public final double PEAK_REVERSE_VOLTAGE = -12.0;
+
+    public final double MANUAL_INPUT_TO_VOLTS = 12.0;
+
+    public final double PRESET_ONE = 100;
+    public final double PRESET_TWO = -100;
+    public final double PRESET_THREE = 200;
+  }
+
   public static class DriveInfo {
     public final int STATUS_SIGNAL_FREQUENCY = 200;
 
