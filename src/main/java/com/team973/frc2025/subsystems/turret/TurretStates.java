@@ -3,6 +3,7 @@ package com.team973.frc2025.subsystems.turret;
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.lib.devices.GreyTalonFX.ControlMode;
 import com.team973.lib.util.SubsystemState;
+import edu.wpi.first.wpilibj.RobotController;
 
 public class TurretStates {
   private abstract static class TurretState implements SubsystemState {
@@ -49,6 +50,7 @@ public class TurretStates {
 
   public static class CharacterizationKS extends TurretState {
     private static boolean hasSeenTargetVelocity = false;
+    private static long m_lastTime;
 
     public CharacterizationKS(TurretIO turret) {
       super(turret);
@@ -56,6 +58,7 @@ public class TurretStates {
 
     public void init() {
       m_turret.setKsTestVolts(0.0);
+      m_lastTime = RobotController.getFPGATime();
     }
 
     public void run() {
@@ -64,12 +67,15 @@ public class TurretStates {
         hasSeenTargetVelocity = true;
       }
       if (!hasSeenTargetVelocity) {
-        double testKsVolts = m_turret.getksTestVolts() + 0.001;
+        double testKsVolts =
+            m_turret.getksTestVolts()
+                + (RobotController.getFPGATime() - m_lastTime) / 1000.0 / 1000.0 * 0.1;
         m_turret.setKsTestVolts(testKsVolts);
         m_turret.getMotor().setControl(ControlMode.VoltageOut, testKsVolts);
       } else {
         m_turret.getMotor().setControl(ControlMode.VoltageOut, 0.0);
       }
+      m_lastTime = RobotController.getFPGATime();
     }
 
     public void exit() {}
