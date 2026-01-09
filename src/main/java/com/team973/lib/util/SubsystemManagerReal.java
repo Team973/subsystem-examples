@@ -2,6 +2,8 @@ package com.team973.lib.util;
 
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.frc2025.subsystems.DriveController;
+import com.team973.frc2025.subsystems.arm.Arm;
+import com.team973.frc2025.subsystems.arm.ArmIO;
 import com.team973.frc2025.subsystems.swerve.SwerveModule;
 import com.team973.lib.devices.GreyPigeon;
 import com.team973.lib.devices.GreyPigeonIO;
@@ -9,6 +11,7 @@ import com.team973.lib.devices.GreyPigeonIO;
 public class SubsystemManagerReal extends SubsystemManager {
   private final GreyPigeonIO m_pigeon;
   private final DriveController m_driveController;
+  private final ArmIO m_arm;
 
   public SubsystemManagerReal(Logger logger) {
     super(logger);
@@ -33,6 +36,8 @@ public class SubsystemManagerReal extends SubsystemManager {
             new SwerveModule(
                 3, RobotInfo.DRIVE_INFO.BACK_RIGHT_CONSTANTS, driveLogger.subLogger("swerve/mod3")),
             m_pigeon);
+
+    m_arm = new Arm(logger.subLogger("arm"));
   }
 
   public GreyPigeonIO getPigeon() {
@@ -41,5 +46,9 @@ public class SubsystemManagerReal extends SubsystemManager {
 
   public DriveController getDriveController() {
     return m_driveController;
+  }
+
+  public ArmIO getArm() {
+    return m_arm;
   }
 }

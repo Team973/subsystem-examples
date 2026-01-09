@@ -18,6 +18,40 @@ public class RobotInfo {
 
   public static final DriveInfo DRIVE_INFO = new DriveInfo();
 
+  public static final ArmInfo ARM_INFO = new ArmInfo();
+
+  public static class ArmInfo {
+    public final int MOTOR_ID = 20;
+
+    public final double MOTOR_GEAR_RATIO = (10.0 / 50.0) * (20.0 / 68.0) * (17.0 / 84.0);
+    public final double LENGTH_METERS = 0.5461;
+
+    public final double ARM_KS = 0.0;
+    public final double ARM_KV = 0.0;
+    public final double ARM_KA = 0.0;
+    public final double ARM_KP = 2.0;
+    public final double ARM_KI = 0.0;
+    public final double ARM_KD = 0.0;
+
+    public final double ARM_MOTION_MAGIC_CRUISE_VELOCITY = 10.0;
+    public final double ARM_MOTION_MAGIC_ACCELERATION = 10.0;
+    public final double ARM_MOTION_MAGIC_JERK = 0.0;
+
+    public final double ARM_VOLTAGE_CLOSED_LOOP_RAMP_PERIOD = 0.0;
+
+    public final double STATOR_CURRENT_LIMIT = 60.0;
+    public final double SUPPLY_CURRENT_LIMIT = 40.0;
+
+    public final double PEAK_FORWARD_VOLTAGE = 12.0;
+    public final double PEAK_REVERSE_VOLTAGE = -12.0;
+
+    public final double MANUAL_INPUT_TO_VOLTS = 12.0;
+
+    public final double PRESET_ONE = 0.0;
+    public final double PRESET_TWO = 60.0;
+    public final double PRESET_THREE = -60.0;
+  }
+
   public static class DriveInfo {
     public final int STATUS_SIGNAL_FREQUENCY = 200;
 
