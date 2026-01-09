@@ -7,18 +7,16 @@ import com.team973.lib.util.Logger;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.RobotController;
 
 public class ElevatorSim extends Elevator {
   private final edu.wpi.first.wpilibj.simulation.ElevatorSim m_sim;
   private final TalonFXSimState m_motorSimState;
 
-  private final double m_motorRotToElevatorHeightMeters;
   private double m_lastPoseMeters;
 
   public ElevatorSim(Logger logger) {
     super(logger);
-
-    m_motorRotToElevatorHeightMeters = RobotInfo.ELEVATOR_INFO.MOTOR_ROT_TO_HEIGHT_METERS;
 
     m_sim =
         new edu.wpi.first.wpilibj.simulation.ElevatorSim(
@@ -43,8 +41,14 @@ public class ElevatorSim extends Elevator {
   @Override
   public void syncSensors() {
     m_motorSimState.addRotorPosition(
-        (m_sim.getPositionMeters() - m_lastPoseMeters) / m_motorRotToElevatorHeightMeters);
+        heightMetersToMotorRotations(m_sim.getPositionMeters() - m_lastPoseMeters));
+
     m_lastPoseMeters = m_sim.getPositionMeters();
+
+    m_motorSimState.setRotorVelocity(
+        heightMetersToMotorRotations(m_sim.getVelocityMetersPerSecond()));
+
+    m_motorSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
 
     super.syncSensors();
   }

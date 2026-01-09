@@ -11,8 +11,6 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 
 public class Elevator extends ElevatorIO {
-  private final RobotInfo.ElevatorInfo m_elevatorInfo;
-
   private final Logger m_logger;
 
   protected final GreyTalonFX m_motor;
@@ -21,7 +19,6 @@ public class Elevator extends ElevatorIO {
 
   public Elevator(Logger logger) {
     m_logger = logger;
-    m_elevatorInfo = RobotInfo.ELEVATOR_INFO;
     m_motor =
         new GreyTalonFX(
             m_elevatorInfo.MOTOR_ID, RobotInfo.CANIVORE_CANBUS, m_logger.subLogger("motorRight"));
@@ -75,7 +72,7 @@ public class Elevator extends ElevatorIO {
     return m_motor;
   }
 
-  public double heightMetersToMotorRotations(double postionHeight) {
+  protected double heightMetersToMotorRotations(double postionHeight) {
     return postionHeight / m_elevatorInfo.MOTOR_ROT_TO_HEIGHT_METERS;
   }
 
@@ -84,8 +81,8 @@ public class Elevator extends ElevatorIO {
   }
 
   @Override
-  public void setTargetPostion(double targetPostionHeightMeters) {
-    m_targetPostionHeightMeters = targetPostionHeightMeters;
+  public void setTargetPreset(Preset preset) {
+    m_targetPostionHeightMeters = preset.getHeightMeters();
     setState(State.ClosedLoop);
   }
 

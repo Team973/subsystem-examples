@@ -2,6 +2,7 @@ package com.team973.frc2025.shared;
 
 import static edu.wpi.first.units.Units.Inches;
 
+import com.team973.lib.util.Conversions;
 import com.team973.lib.util.SwerveModuleConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -43,6 +44,10 @@ public class RobotInfo {
 
     public final double PEAK_FORWARD_VOLTAGE = 12.0;
     public final double PEAK_REVERSE_VOLTAGE = -12.0;
+
+    public final double PRESET_ONE = 0.0;
+    public final double PRESET_TWO = 15.0 * Conversions.Distance.METERS_PER_INCH;
+    public final double PRESET_THREE = 30.0 * Conversions.Distance.METERS_PER_INCH;
   }
 
   public static class DriveInfo {

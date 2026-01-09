@@ -5,6 +5,7 @@
 package com.team973.frc2025;
 
 import com.team973.frc2025.subsystems.DriveController;
+import com.team973.frc2025.subsystems.elevator.ElevatorIO;
 import com.team973.lib.devices.GreyPigeonIO;
 import com.team973.lib.util.AllianceCache;
 import com.team973.lib.util.Joystick;
@@ -21,29 +22,37 @@ public class Robot extends TimedRobot {
 
   private final GreyPigeonIO m_pigeon = m_subsystemManager.getPigeon();
   private final DriveController m_driveController = m_subsystemManager.getDriveController();
+  private final ElevatorIO m_elevator = m_subsystemManager.getElevator();
 
   private final Joystick m_driverStick =
       new Joystick(0, Joystick.Type.XboxController, m_logger.subLogger("driverStick"));
+  private final Joystick m_coDriverStick =
+      new Joystick(1, Joystick.Type.XboxController, m_logger.subLogger("coDriverStick"));
 
   private void syncSensors() {
     m_driveController.syncSensors();
+    m_elevator.syncSensors();
   }
 
   private void updateSubsystems() {
     m_driveController.update();
+    m_elevator.update();
   }
 
   private void resetSubsystems() {
     m_driveController.reset();
+    m_elevator.reset();
   }
 
   private void log() {
     m_subsystemManager.log();
     m_driveController.log();
+    m_elevator.log();
   }
 
   private void updateJoysticks() {
     m_driverStick.update();
+    m_coDriverStick.update();
   }
 
   public Robot() {
@@ -53,6 +62,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    syncSensors();
     log();
     updateJoysticks();
   }
@@ -71,8 +81,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    syncSensors();
-
     double allianceScalar = 1.0;
     if (AllianceCache.Get().get() == Alliance.Red) {
       // Our gyroscope is blue-centric meaning that facing away from the alliance wall
@@ -95,6 +103,18 @@ public class Robot extends TimedRobot {
             allianceScalar * m_driverStick.getLeftXAxis() * 0.7,
             m_driverStick.getRightXAxis() * 0.8);
 
+    if (m_coDriverStick.getAButtonPressed()) {
+      m_elevator.setTargetPreset(ElevatorIO.Preset.One);
+    } else if (m_coDriverStick.getBButtonPressed()) {
+      m_elevator.setTargetPreset(ElevatorIO.Preset.Two);
+    } else if (m_coDriverStick.getXButtonPressed()) {
+      m_elevator.setTargetPreset(ElevatorIO.Preset.Three);
+    } else if (m_coDriverStick.getYButtonPressed()) {
+      m_elevator.setState(ElevatorIO.State.Manual);
+    }
+
+    // m_elevator.setManualInput(m_coDriverStick.getLeftYAxis());
+
     updateSubsystems();
   }
 
@@ -102,9 +122,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {
-    syncSensors();
-  }
+  public void disabledPeriodic() {}
 
   @Override
   public void testInit() {}
