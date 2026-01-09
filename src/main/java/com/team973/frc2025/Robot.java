@@ -131,14 +131,8 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     syncSensors();
-    if (m_coDriverStick.getBButtonPressed()) {
-      m_turret.setState(TurretIO.State.CharacterizationKS);
-      m_turret.setManualInput(0.0);
-    } else if (m_coDriverStick.getAButtonPressed()) {
-      m_turret.ksTestIncrment(1.0);
-    } else if (m_coDriverStick.getYButtonPressed()) {
-      //TODO: ADD +/- ks
-    }
+    m_turret.setState(TurretIO.State.CharacterizationKS);
+    m_turret.setManualInput(0.0);
     updateSubsystems();
   }
 

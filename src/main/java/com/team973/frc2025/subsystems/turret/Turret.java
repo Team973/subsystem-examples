@@ -30,11 +30,7 @@ public class Turret extends TurretIO {
     TalonFXConfiguration motorConfig = new TalonFXConfiguration();
 
     motorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-    if(getState() != TurretIO.State.CharacterizationKS); {
-      motorConfig.Slot0.kS = m_ksTestVolts;
-    }
     motorConfig.Slot0.kS = m_turretInfo.TURRET_KS;
-
     motorConfig.Slot0.kV = m_turretInfo.TURRET_KV;
     motorConfig.Slot0.kA = m_turretInfo.TURRET_KA;
     motorConfig.Slot0.kP = m_turretInfo.TURRET_KP;
@@ -107,9 +103,15 @@ public class Turret extends TurretIO {
   public double getManualInput() {
     return m_manualInput;
   }
+
   @Override
-  public void ksTestIncrment(double incrment) {
-   m_ksTestVolts += incrment;
+  public double getksTestVolts() {
+    return m_ksTestVolts;
+  }
+
+  @Override
+  public void setKsTestVolts(double volts) {
+    m_ksTestVolts = volts;
   }
 
   @Override
@@ -124,6 +126,8 @@ public class Turret extends TurretIO {
     m_logger.log("currentPostionDeg", motorRotationsToDeg(motorRot));
     m_logger.log("targetPostionDeg", m_targetPostionDeg);
     m_logger.log("manualInput", m_manualInput);
+    m_logger.log("ksTestVoltage", m_ksTestVolts);
+    m_logger.log("turretVelocity", m_motor.getVelocity().getValueAsDouble());
 
     m_logger.log("state", getState().toString());
   }

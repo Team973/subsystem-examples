@@ -46,23 +46,35 @@ public class TurretStates {
 
     public void exit() {}
   }
+
   public static class CharacterizationKS extends TurretState {
+    private static boolean hasSeenTargetVelocity = false;
+
     public CharacterizationKS(TurretIO turret) {
       super(turret);
     }
 
-    public void init() {}
+    public void init() {
+      m_turret.setKsTestVolts(0.0);
+    }
 
     public void run() {
-      m_turret
-          .getMotor()
-          .setControl(
-              ControlMode.VoltageOut,
-              m_turret.getManualInput() * RobotInfo.TURRET_INFO.MANUAL_INPUT_TO_VOLTS);
+      if (Math.abs(m_turret.getMotor().getVelocity().getValueAsDouble())
+          > RobotInfo.TURRET_INFO.TEST_KS_VELOCITY_THRESHOLD) {
+        hasSeenTargetVelocity = true;
+      }
+      if (!hasSeenTargetVelocity) {
+        double testKsVolts = m_turret.getksTestVolts() + 0.001;
+        m_turret.setKsTestVolts(testKsVolts);
+        m_turret.getMotor().setControl(ControlMode.VoltageOut, testKsVolts);
+      } else {
+        m_turret.getMotor().setControl(ControlMode.VoltageOut, 0.0);
+      }
     }
 
     public void exit() {}
   }
+
   public static class Off extends TurretState {
     public Off(TurretIO turret) {
       super(turret);

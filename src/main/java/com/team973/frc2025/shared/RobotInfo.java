@@ -25,6 +25,8 @@ public class RobotInfo {
 
     public final double MOTOR_GEAR_RATIO = 574.436; // ((5.0 / 1.0) * (128.0 / 10.0))
 
+    public final double TEST_KS_VELOCITY_THRESHOLD = 0.03;
+
     public final double TURRET_KS = 0.0;
     public final double TURRET_KV = 0.0;
     public final double TURRET_KA = 0.0;
