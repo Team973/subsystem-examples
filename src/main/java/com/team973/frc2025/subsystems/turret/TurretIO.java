@@ -14,6 +14,7 @@ public abstract class TurretIO extends Subsystem<TurretIO.State> {
   public enum State {
     ClosedLoop,
     Manual,
+    CharacterizationKS,
     Off
   }
 
@@ -42,6 +43,7 @@ public abstract class TurretIO extends Subsystem<TurretIO.State> {
             State.class,
             new StateMap.Entry<>(State.ClosedLoop, new TurretStates.ClosedLoop(this)),
             new StateMap.Entry<>(State.Manual, new TurretStates.Manual(this)),
+            new StateMap.Entry<>(State.CharacterizationKS, new TurretStates.CharacterizationKS(this)),
             new StateMap.Entry<>(State.Off, new TurretStates.Off(this)));
   }
 
@@ -60,4 +62,6 @@ public abstract class TurretIO extends Subsystem<TurretIO.State> {
   public abstract double getTargetPositionMotorRot();
 
   public abstract double getManualInput();
+
+  public abstract void ksTestIncrment(double incrment); 
 }

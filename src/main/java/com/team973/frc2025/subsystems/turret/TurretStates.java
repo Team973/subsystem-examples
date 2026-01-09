@@ -46,7 +46,23 @@ public class TurretStates {
 
     public void exit() {}
   }
+  public static class CharacterizationKS extends TurretState {
+    public CharacterizationKS(TurretIO turret) {
+      super(turret);
+    }
 
+    public void init() {}
+
+    public void run() {
+      m_turret
+          .getMotor()
+          .setControl(
+              ControlMode.VoltageOut,
+              m_turret.getManualInput() * RobotInfo.TURRET_INFO.MANUAL_INPUT_TO_VOLTS);
+    }
+
+    public void exit() {}
+  }
   public static class Off extends TurretState {
     public Off(TurretIO turret) {
       super(turret);
