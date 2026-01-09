@@ -13,7 +13,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 public class Arm extends ArmIO {
   protected static final RobotInfo.ArmInfo m_armInfo = RobotInfo.ARM_INFO;
 
-  private final Logger m_logger;
+  protected final Logger m_logger;
 
   protected final GreyTalonFX m_motor;
 
@@ -74,12 +74,12 @@ public class Arm extends ArmIO {
     return m_motor;
   }
 
-  public double degToMotorRotations(double deg) {
-    return (deg / 360.0) * m_armInfo.MOTOR_GEAR_RATIO;
+  private double degToMotorRotations(double deg) {
+    return (deg / 360.0) / m_armInfo.MOTOR_GEAR_RATIO;
   }
 
   private double motorRotationsToDeg(double motorPostion) {
-    return (motorPostion / m_armInfo.MOTOR_GEAR_RATIO) * 360.0;
+    return (motorPostion * m_armInfo.MOTOR_GEAR_RATIO) * 360.0;
   }
 
   @Override
@@ -108,11 +108,10 @@ public class Arm extends ArmIO {
 
   @Override
   public void log() {
-    double motorRot = m_motor.getPosition().getValueAsDouble();
-
     m_motor.log();
 
-    m_logger.log("currentPostionDeg", motorRotationsToDeg(motorRot));
+    m_logger.log(
+        "currentPostionDeg", motorRotationsToDeg(m_motor.getPosition().getValueAsDouble()));
     m_logger.log("targetPostionDeg", m_targetPostionDeg);
     m_logger.log("manualInput", m_manualInput);
 
