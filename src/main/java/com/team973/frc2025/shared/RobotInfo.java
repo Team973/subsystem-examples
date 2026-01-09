@@ -28,7 +28,7 @@ public class RobotInfo {
     public final double SHOOTER_KS = 0.0;
     public final double SHOOTER_KV = 0.0;
     public final double SHOOTER_KA = 0.0;
-    public final double SHOOTER_KP = 2.0;
+    public final double SHOOTER_KP = 0.1;
     public final double SHOOTER_KI = 0.0;
     public final double SHOOTER_KD = 0.0;
 

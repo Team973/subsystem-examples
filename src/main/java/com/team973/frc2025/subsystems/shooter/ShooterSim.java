@@ -22,7 +22,7 @@ public class ShooterSim extends Shooter {
     m_sim =
         new FlywheelSim(
             LinearSystemId.createFlywheelSystem(
-                DCMotor.getKrakenX60(1), 0.02, m_shooterInfo.MOTOR_GEAR_RATIO),
+                DCMotor.getKrakenX60(1), 0.002, m_shooterInfo.MOTOR_GEAR_RATIO),
             DCMotor.getKrakenX60(1));
 
     m_motorSimState = m_motor.getSimState();
@@ -36,7 +36,7 @@ public class ShooterSim extends Shooter {
   }
 
   private double flywheelRPSToMotorRPS(double flywheelRPS) {
-    return flywheelRPS / m_shooterInfo.MOTOR_GEAR_RATIO;
+    return flywheelRPS * m_shooterInfo.MOTOR_GEAR_RATIO;
   }
 
   @Override
@@ -48,7 +48,7 @@ public class ShooterSim extends Shooter {
     m_lastVelocityRPM = m_sim.getAngularVelocityRPM();
     m_lastTimeSec = Timer.getFPGATimestamp();
 
-    m_motorSimState.setRotorVelocity(flywheelRPSToMotorRPS((m_sim.getAngularVelocityRPM() / 60.0)));
+    m_motorSimState.setRotorVelocity(flywheelRPSToMotorRPS(m_sim.getAngularVelocityRPM() / 60.0));
 
     m_motorSimState.setSupplyVoltage(RobotController.getBatteryVoltage());
 
