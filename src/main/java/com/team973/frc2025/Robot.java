@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
       m_elevator.setState(ElevatorIO.State.Manual);
     }
 
-    // m_elevator.setManualInput(m_coDriverStick.getLeftYAxis());
+    m_elevator.setManualInput(m_coDriverStick.getLeftYAxis());
 
     updateSubsystems();
   }

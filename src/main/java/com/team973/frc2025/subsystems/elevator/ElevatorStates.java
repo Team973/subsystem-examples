@@ -1,5 +1,6 @@
 package com.team973.frc2025.subsystems.elevator;
 
+import com.team973.frc2025.shared.RobotInfo;
 import com.team973.lib.devices.GreyTalonFX.ControlMode;
 import com.team973.lib.util.SubsystemState;
 
@@ -22,7 +23,7 @@ public class ElevatorStates {
     public void run() {
       m_elevator
           .getMotor()
-          .setControl(ControlMode.MotionMagicVoltage, m_elevator.getTargetPositionMotorRot(), 0);
+          .setControl(ControlMode.MotionMagicVoltage, m_elevator.getTargetPositionMotorRot());
     }
 
     public void exit() {}
@@ -35,7 +36,13 @@ public class ElevatorStates {
 
     public void init() {}
 
-    public void run() {}
+    public void run() {
+      m_elevator
+          .getMotor()
+          .setControl(
+              ControlMode.VoltageOut,
+              m_elevator.getManualInput() * RobotInfo.ELEVATOR_INFO.MANUAL_INPUT_TO_VOLTS);
+    }
 
     public void exit() {}
   }

@@ -55,5 +55,9 @@ public abstract class ElevatorIO extends Subsystem<ElevatorIO.State> {
 
   public abstract void setTargetPreset(Preset preset);
 
+  public abstract void setManualInput(double input);
+
   public abstract double getTargetPositionMotorRot();
+
+  public abstract double getManualInput();
 }

@@ -23,8 +23,10 @@ public class RobotInfo {
   public static class ElevatorInfo {
     public final int MOTOR_ID = 20;
 
+    public final double MANUAL_INPUT_TO_VOLTS = 12.0;
+
     public final double MOTOR_GEAR_RATIO = 10.0 / 56.0;
-    public final double MOTOR_ROT_TO_HEIGHT_METERS = MOTOR_GEAR_RATIO * 5.0 * 36.0 * 100.0;
+    public final double MOTOR_ROT_TO_HEIGHT_METERS = MOTOR_GEAR_RATIO * 5.0 * 36.0 * (1.0 / 100.0);
 
     public final double ELEVATOR_KS = 0.0;
     public final double ELEVATOR_KV = 0.15;

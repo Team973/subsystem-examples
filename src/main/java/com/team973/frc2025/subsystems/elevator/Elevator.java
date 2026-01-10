@@ -16,6 +16,7 @@ public class Elevator extends ElevatorIO {
   protected final GreyTalonFX m_motor;
 
   private double m_targetPostionHeightMeters;
+  private double m_manualInput;
 
   public Elevator(Logger logger) {
     m_logger = logger;
@@ -55,6 +56,9 @@ public class Elevator extends ElevatorIO {
 
     m_motor.setConfig(motorConfig);
     m_motor.setPosition(0.0);
+
+    m_targetPostionHeightMeters = Preset.One.getHeightMeters();
+    m_manualInput = 0.0;
   }
 
   @Override
@@ -87,8 +91,18 @@ public class Elevator extends ElevatorIO {
   }
 
   @Override
+  public void setManualInput(double input) {
+    m_manualInput = input;
+  }
+
+  @Override
   public double getTargetPositionMotorRot() {
     return heightMetersToMotorRotations(m_targetPostionHeightMeters);
+  }
+
+  @Override
+  public double getManualInput() {
+    return m_manualInput;
   }
 
   @Override
@@ -100,8 +114,9 @@ public class Elevator extends ElevatorIO {
 
     m_motor.log();
 
-    m_logger.log("currentPostionHeightInches", motorRotationsToHeightMeters(motorRot));
-    m_logger.log("targetPostionHeightInches", m_targetPostionHeightMeters);
+    m_logger.log("currentPostionHeightMeters", motorRotationsToHeightMeters(motorRot));
+    m_logger.log("targetPostionHeightMeters", m_targetPostionHeightMeters);
+    m_logger.log("manualInput", m_manualInput);
 
     m_logger.log("state", getState().toString());
   }
