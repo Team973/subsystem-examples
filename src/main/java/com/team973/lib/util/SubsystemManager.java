@@ -1,6 +1,7 @@
 package com.team973.lib.util;
 
 import com.team973.frc2025.Robot;
+import com.team973.frc2025.RobotConfig;
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.frc2025.subsystems.DriveController;
 import com.team973.lib.devices.GreyPigeonIO;
@@ -13,7 +14,7 @@ public abstract class SubsystemManager {
 
   protected SubsystemManager(Logger logger) {
     m_logger = logger;
-    m_robotInfo = new RobotInfo();
+    m_robotInfo = RobotConfig.get();
   }
 
   protected Logger getLogger() {

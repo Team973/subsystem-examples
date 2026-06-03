@@ -633,7 +633,30 @@ public class GreyTalonFX extends TalonFX {
     SmartDashboard.putBoolean("TalonFX/" + m_deviceID + " Faults/" + faultName, value);
   }
 
-  public static class GreyTalonFXConfig {
+  public static class Config {
+    public double KS = 0.0;
+    public double KV = 0.0;
+    public double KA = 0.0;
+    public double KP = 0.0;
+    public double KI = 0.0;
+    public double KD = 0.0;
+
+    public double STATOR_CURRENT_LIMIT = 60.0;
+    public boolean STATOR_CURRENT_LIMIT_ENABLE = true;
+    public double SUPPLY_CURRENT_LIMIT = 40.0;
+    public boolean SUPPLY_CURRENT_LIMIT_ENABLE = true;
+
+    public double PEAK_FORWARD_VOLTAGE = 12.0;
+    public double PEAK_REVERSE_VOLTAGE = -12.0;
+
+    public double MOTION_MAGIC_CRUISE_VELOCITY = 10.0;
+    public double MOTION_MAGIC_ACCELERATION = 10.0;
+    public double MOTION_MAGIC_JERK = 0.0;
+
+    public final double VOLTAGE_CLOSED_LOOP_RAMP_PERIOD = 0.0;
+
+    public InvertedValue MOTOR_ROTATION_DIRECTION = InvertedValue.CounterClockwise_Positive;
+    public NeutralModeValue MOTOR_MODE = NeutralModeValue.Coast;
 
     public TalonFXConfiguration getConfig() {
       TalonFXConfiguration config = new TalonFXConfiguration();
@@ -642,17 +665,22 @@ public class GreyTalonFX extends TalonFX {
       config.CurrentLimits.StatorCurrentLimitEnable = STATOR_CURRENT_LIMIT_ENABLE;
       config.CurrentLimits.SupplyCurrentLimit = SUPPLY_CURRENT_LIMIT;
       config.CurrentLimits.SupplyCurrentLimitEnable = SUPPLY_CURRENT_LIMIT_ENABLE;
-      config.Voltage.PeakForwardVoltage = PEAK_FORDWARD_VOLTAGE;
+      config.Voltage.PeakForwardVoltage = PEAK_FORWARD_VOLTAGE;
       config.Voltage.PeakReverseVoltage = PEAK_REVERSE_VOLTAGE;
+      config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_CRUISE_VELOCITY;
+      config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
+      config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
+      config.Slot0.kS = KS;
+      config.Slot0.kV = KV;
+      config.Slot0.kA = KA;
+      config.Slot0.kP = KP;
+      config.Slot0.kI = KI;
+      config.Slot0.kD = KD;
+      config.ClosedLoopRamps.VoltageClosedLoopRampPeriod = VOLTAGE_CLOSED_LOOP_RAMP_PERIOD;
+      config.MotorOutput.Inverted = MOTOR_ROTATION_DIRECTION;
+      config.MotorOutput.NeutralMode = MOTOR_MODE;
+
       return config;
     }
-
-    public double STATOR_CURRENT_LIMIT = 60.0;
-    public boolean STATOR_CURRENT_LIMIT_ENABLE = true;
-    public double SUPPLY_CURRENT_LIMIT = 40.0;
-    public boolean SUPPLY_CURRENT_LIMIT_ENABLE = true;
-
-    public double PEAK_FORDWARD_VOLTAGE = 12.0;
-    public double PEAK_REVERSE_VOLTAGE = -12.0;
   }
 }

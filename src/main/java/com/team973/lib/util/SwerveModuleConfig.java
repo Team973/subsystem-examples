@@ -1,6 +1,6 @@
 package com.team973.lib.util;
 
-import com.team973.lib.devices.GreyTalonFX.GreyTalonFXConfig;
+import com.team973.lib.devices.GreyTalonFX;
 
 public class SwerveModuleConfig {
   public final int driveMotorID;
@@ -8,16 +8,16 @@ public class SwerveModuleConfig {
   public final int cancoderID;
   public final double angleOffset;
 
-  public final GreyTalonFXConfig driveMotorConfig;
-  public final GreyTalonFXConfig angleMotorConfig;
+  public final GreyTalonFX.Config driveMotorConfig;
+  public final GreyTalonFX.Config angleMotorConfig;
 
   public SwerveModuleConfig(
       int driveMotorID,
       int angleMotorID,
       int cancoderID,
       double angleOffset,
-      GreyTalonFXConfig driveMotorConfig,
-      GreyTalonFXConfig angleMotorConfig) {
+      GreyTalonFX.Config driveMotorConfig,
+      GreyTalonFX.Config angleMotorConfig) {
     this.driveMotorID = driveMotorID;
     this.angleMotorID = angleMotorID;
     this.cancoderID = cancoderID;

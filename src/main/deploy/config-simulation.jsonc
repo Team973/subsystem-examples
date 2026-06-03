@@ -1,0 +1,4 @@
+// Overrides for simulation go here.
+{
+  "ROBORIO_CANBUS": "simulation"
+}

@@ -1,6 +1,6 @@
 {
   "FEATURE_FLAGS": {
-		"ENABLE_DRIVE:": true
+		"ENABLE_DRIVE": true
 	},
 	"DRIVE_INFO": {
     "STATUS_SIGNAL_FREQUENCY": 200,

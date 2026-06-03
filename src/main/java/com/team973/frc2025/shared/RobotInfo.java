@@ -1,6 +1,6 @@
 package com.team973.frc2025.shared;
 
-import com.team973.lib.devices.GreyTalonFX.GreyTalonFXConfig;
+import com.team973.lib.devices.GreyTalonFX;
 import com.team973.lib.util.SwerveModuleConfig;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -14,7 +14,7 @@ public class RobotInfo {
   public DriveInfo DRIVE_INFO = new DriveInfo();
 
   public static class FeatureFlags {
-    public boolean ENABLE_DRIVE = true;
+    public boolean ENABLE_DRIVE;
   }
 
   public static class DriveInfo {
@@ -26,29 +26,29 @@ public class RobotInfo {
     public int FRONT_LEFT_MODULE_STEER_MOTOR;
     public int FRONT_LEFT_MODULE_STEER_ENCODER;
     public double FRONT_LEFT_MODULE_STEER_OFFSET;
-    public GreyTalonFXConfig FRONT_LEFT_DRIVE_MOTOR_CONFIG;
-    public GreyTalonFXConfig FRONT_LEFT_STEER_MOTOR_CONFIG;
+    public GreyTalonFX.Config FRONT_LEFT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config FRONT_LEFT_STEER_MOTOR_CONFIG;
 
     public int FRONT_RIGHT_MODULE_DRIVE_MOTOR;
     public int FRONT_RIGHT_MODULE_STEER_MOTOR;
     public int FRONT_RIGHT_MODULE_STEER_ENCODER;
     public double FRONT_RIGHT_MODULE_STEER_OFFSET;
-    public GreyTalonFXConfig FRONT_RIGHT_DRIVE_MOTOR_CONFIG;
-    public GreyTalonFXConfig FRONT_RIGHT_STEER_MOTOR_CONFIG;
+    public GreyTalonFX.Config FRONT_RIGHT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config FRONT_RIGHT_STEER_MOTOR_CONFIG;
 
     public int BACK_LEFT_MODULE_DRIVE_MOTOR;
     public int BACK_LEFT_MODULE_STEER_MOTOR;
     public int BACK_LEFT_MODULE_STEER_ENCODER;
     public double BACK_LEFT_MODULE_STEER_OFFSET;
-    public GreyTalonFXConfig BACK_LEFT_DRIVE_MOTOR_CONFIG;
-    public GreyTalonFXConfig BACK_LEFT_STEER_MOTOR_CONFIG;
+    public GreyTalonFX.Config BACK_LEFT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config BACK_LEFT_STEER_MOTOR_CONFIG;
 
     public int BACK_RIGHT_MODULE_DRIVE_MOTOR;
     public int BACK_RIGHT_MODULE_STEER_MOTOR;
     public int BACK_RIGHT_MODULE_STEER_ENCODER;
     public double BACK_RIGHT_MODULE_STEER_OFFSET;
-    public GreyTalonFXConfig BACK_RIGHT_DRIVE_MOTOR_CONFIG;
-    public GreyTalonFXConfig BACK_RIGHT_STEER_MOTOR_CONFIG;
+    public GreyTalonFX.Config BACK_RIGHT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config BACK_RIGHT_STEER_MOTOR_CONFIG;
 
     public double DRIVE_GEAR_RATIO;
 
