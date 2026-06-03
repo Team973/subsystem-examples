@@ -1,151 +1,174 @@
 package com.team973.frc2025.shared;
 
-import static edu.wpi.first.units.Units.Inches;
-
+import com.team973.lib.devices.GreyTalonFX;
 import com.team973.lib.util.SwerveModuleConfig;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.system.plant.DCMotor;
-import org.ironmaple.simulation.drivesims.COTS;
-import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 
 /** Robot info, specs, dimensions. */
 public class RobotInfo {
-  public static final String CANIVORE_CANBUS = "Canivore"; // "Canivore";
-  public static final String ROBORIO_CANBUS = "";
+  public static String CANIVORE_CANBUS = "Canivore";
+  public String ROBORIO_CANBUS = "";
 
-  public static final DriveInfo DRIVE_INFO = new DriveInfo();
+  public FeatureFlags FEATURE_FLAGS = new FeatureFlags();
+  public DriveInfo DRIVE_INFO = new DriveInfo();
+
+  public static class FeatureFlags {
+    public boolean ENABLE_DRIVE;
+  }
 
   public static class DriveInfo {
-    public final int STATUS_SIGNAL_FREQUENCY = 200;
+    public int STATUS_SIGNAL_FREQUENCY = 200;
 
-    public final int PIGEON_ID = 1;
+    public int PIGEON_ID = 1;
 
-    public final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 2;
-    public final int FRONT_LEFT_MODULE_STEER_MOTOR = 3;
-    public final int FRONT_LEFT_MODULE_STEER_ENCODER = 4;
-    public final double FRONT_LEFT_MODULE_STEER_OFFSET = -95.273;
+    public int FRONT_LEFT_MODULE_DRIVE_MOTOR;
+    public int FRONT_LEFT_MODULE_STEER_MOTOR;
+    public int FRONT_LEFT_MODULE_STEER_ENCODER;
+    public double FRONT_LEFT_MODULE_STEER_OFFSET;
+    public GreyTalonFX.Config FRONT_LEFT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config FRONT_LEFT_STEER_MOTOR_CONFIG;
 
-    public final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 8;
-    public final int FRONT_RIGHT_MODULE_STEER_MOTOR = 9;
-    public final int FRONT_RIGHT_MODULE_STEER_ENCODER = 10;
-    public final double FRONT_RIGHT_MODULE_STEER_OFFSET = 152.929;
+    public int FRONT_RIGHT_MODULE_DRIVE_MOTOR;
+    public int FRONT_RIGHT_MODULE_STEER_MOTOR;
+    public int FRONT_RIGHT_MODULE_STEER_ENCODER;
+    public double FRONT_RIGHT_MODULE_STEER_OFFSET;
+    public GreyTalonFX.Config FRONT_RIGHT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config FRONT_RIGHT_STEER_MOTOR_CONFIG;
 
-    public final int BACK_LEFT_MODULE_DRIVE_MOTOR = 5;
-    public final int BACK_LEFT_MODULE_STEER_MOTOR = 6;
-    public final int BACK_LEFT_MODULE_STEER_ENCODER = 7;
-    public final double BACK_LEFT_MODULE_STEER_OFFSET = 44.472;
+    public int BACK_LEFT_MODULE_DRIVE_MOTOR;
+    public int BACK_LEFT_MODULE_STEER_MOTOR;
+    public int BACK_LEFT_MODULE_STEER_ENCODER;
+    public double BACK_LEFT_MODULE_STEER_OFFSET;
+    public GreyTalonFX.Config BACK_LEFT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config BACK_LEFT_STEER_MOTOR_CONFIG;
 
-    public final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 11;
-    public final int BACK_RIGHT_MODULE_STEER_MOTOR = 12;
-    public final int BACK_RIGHT_MODULE_STEER_ENCODER = 13;
-    public final double BACK_RIGHT_MODULE_STEER_OFFSET = 100.458;
+    public int BACK_RIGHT_MODULE_DRIVE_MOTOR;
+    public int BACK_RIGHT_MODULE_STEER_MOTOR;
+    public int BACK_RIGHT_MODULE_STEER_ENCODER;
+    public double BACK_RIGHT_MODULE_STEER_OFFSET;
+    public GreyTalonFX.Config BACK_RIGHT_DRIVE_MOTOR_CONFIG;
+    public GreyTalonFX.Config BACK_RIGHT_STEER_MOTOR_CONFIG;
 
-    public final double DRIVE_GEAR_RATIO =
-        (10.0 / 54.0) * (40.0 / 16.0) * (15.0 / 45.0); // x3:10, 6.48:1
+    public double DRIVE_GEAR_RATIO;
 
-    public final double ANGLE_GEAR_RATIO = (10.0 / 22.0) * (16.0 / 88.0); // 12.1:1
+    public double ANGLE_GEAR_RATIO;
 
-    public final double WHEEL_DIAMETER_METERS = 0.1016;
-    public final double WHEEL_CIRCUMFERENCE_METERS = WHEEL_DIAMETER_METERS * Math.PI;
+    public double WHEEL_DIAMETER_METERS;
+
+    public double getWheelCircumferenceMeters() {
+      return WHEEL_DIAMETER_METERS * Math.PI;
+    }
 
     /**
      * The left-to-right distance between the drivetrain wheels Should be measured from center to
      * center.
      */
-    public static final double TRACKWIDTH_METERS = 0.5334;
+    public double TRACKWIDTH_METERS;
 
     /**
      * The front-to-back distance between the drivetrain wheels. Should be measured from center to
      * center.
      */
-    public static final double WHEELBASE_METERS = 0.5334;
+    public double WHEELBASE_METERS;
 
-    public final double OPEN_LOOP_RAMP = 0.0;
-    public final double CLOSED_LOOP_RAMP = 0.0;
+    public double FULL_WIDTH_METERS;
 
-    /* Angle Motor PID Values */
-    public final double ANGLE_KP = 5.5; // 6.5;
-    public final double ANGLE_KI = 0.0;
-    public final double ANGLE_KD = 0.0;
-    public final double ANGLE_KF = 0.0;
-    public final double ANGLE_KV = 0.0;
+    public double FULL_LENGTH_METERS;
 
-    /* Drive Motor PID Values */
-    public final double DRIVE_KP = 0.38;
-    public final double DRIVE_KI = 0.0;
-    public final double DRIVE_KD = 0.0;
-    public final double DRIVE_KF = 0.12;
+    public double BUMPER_HEIGHT_METERS;
 
-    /* Motor Inverts */
-    public final boolean DRIVE_MOTOR_INVERT = true;
-    public final boolean ANGLE_MOTOR_INVERT = true;
-
-    /* Angle Encoder Invert */
-    public final boolean CANCODER_INVERT = false;
-
-    // final public  double FALCON_TRAP_FREE_SPEED = 6380.0;
-    public final double KRAKEN_TRAP_FREE_SPEED = 6000.0;
-    public final double MAX_ACCELERATION_METERS_PER_SECOND = 3.0; // 4.3;
-    public final double LINEAR_METERS_PER_WHEEL_ROTATIONS = WHEEL_DIAMETER_METERS * Math.PI;
+    public double getLinearMetersPerWheelRotations() {
+      return WHEEL_DIAMETER_METERS * Math.PI;
+    }
 
     /** Measured Max Speed: 4.724 MPS */
-    public final double MAX_VELOCITY_METERS_PER_SECOND =
-        (KRAKEN_TRAP_FREE_SPEED / 60.0 * DRIVE_GEAR_RATIO * LINEAR_METERS_PER_WHEEL_ROTATIONS);
+    public double getMaxVelocityMetersPerSecond() {
+      return MAX_LINEAR_VELOCITY_METERS_PER_SECOND;
+    }
 
     /** Measured Max Angular Speed: 12.65 RadPS */
-    public final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = 13.3;
+    public double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 
-    public final SwerveModuleConfig FRONT_LEFT_CONSTANTS =
-        new SwerveModuleConfig(
-            FRONT_LEFT_MODULE_DRIVE_MOTOR,
-            FRONT_LEFT_MODULE_STEER_MOTOR,
-            FRONT_LEFT_MODULE_STEER_ENCODER,
-            FRONT_LEFT_MODULE_STEER_OFFSET);
-    public final SwerveModuleConfig FRONT_RIGHT_CONSTANTS =
-        new SwerveModuleConfig(
-            FRONT_RIGHT_MODULE_DRIVE_MOTOR,
-            FRONT_RIGHT_MODULE_STEER_MOTOR,
-            FRONT_RIGHT_MODULE_STEER_ENCODER,
-            FRONT_RIGHT_MODULE_STEER_OFFSET);
-    public final SwerveModuleConfig BACK_LEFT_CONSTANTS =
-        new SwerveModuleConfig(
-            BACK_LEFT_MODULE_DRIVE_MOTOR,
-            BACK_LEFT_MODULE_STEER_MOTOR,
-            BACK_LEFT_MODULE_STEER_ENCODER,
-            BACK_LEFT_MODULE_STEER_OFFSET);
-    public final SwerveModuleConfig BACK_RIGHT_CONSTANTS =
-        new SwerveModuleConfig(
-            BACK_RIGHT_MODULE_DRIVE_MOTOR,
-            BACK_RIGHT_MODULE_STEER_MOTOR,
-            BACK_RIGHT_MODULE_STEER_ENCODER,
-            BACK_RIGHT_MODULE_STEER_OFFSET);
+    public double MAX_LINEAR_VELOCITY_METERS_PER_SECOND;
 
-    public final SwerveDriveKinematics SWERVE_KINEMATICS =
-        new SwerveDriveKinematics(
-            new Translation2d(TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0),
-            new Translation2d(TRACKWIDTH_METERS / 2.0, -WHEELBASE_METERS / 2.0),
-            new Translation2d(-TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0),
-            new Translation2d(-TRACKWIDTH_METERS / 2.0, -WHEELBASE_METERS / 2.0));
+    private SwerveModuleConfig m_frontLeftConstants;
 
-    public final DriveTrainSimulationConfig DRIVE_TRAIN_SIMULATION_CONFIG =
-        DriveTrainSimulationConfig.Default()
-            // Specify gyro type (for realistic gyro drifting and error simulation)
-            .withGyro(COTS.ofPigeon2())
-            // Specify swerve module (for realistic swerve dynamics)
-            .withSwerveModule(
-                COTS.ofMark4(
-                    DCMotor.getKrakenX60(1), // Drive motor is a Kraken X60
-                    DCMotor.getKrakenX60(1), // Steer motor is a Kraken
-                    COTS.WHEELS.COLSONS.cof, // Use the COF for Colson Wheels
-                    3)) // L3 Gear ratio
-            // Configures the track length and track width (spacing between swerve modules)
-            .withTrackLengthTrackWidth(Inches.of(26), Inches.of(26))
-            // Configures the bumper size (dimensions of the robot bumper)
-            .withBumperSize(Inches.of(34), Inches.of(34));
+    public SwerveModuleConfig getFrontLeftConstants() {
+      if (m_frontLeftConstants == null) {
+        m_frontLeftConstants =
+            new SwerveModuleConfig(
+                FRONT_LEFT_MODULE_DRIVE_MOTOR,
+                FRONT_LEFT_MODULE_STEER_MOTOR,
+                FRONT_LEFT_MODULE_STEER_ENCODER,
+                FRONT_LEFT_MODULE_STEER_OFFSET,
+                FRONT_LEFT_DRIVE_MOTOR_CONFIG,
+                FRONT_LEFT_STEER_MOTOR_CONFIG);
+      }
+      return m_frontLeftConstants;
+    }
 
-    public final Pose2d SIM_STARTING_POSE = new Pose2d(7.18, 5.7, Rotation2d.fromDegrees(180));
+    private SwerveModuleConfig m_frontRightConstants;
+
+    public SwerveModuleConfig getFrontRightConstants() {
+      if (m_frontRightConstants == null) {
+        m_frontRightConstants =
+            new SwerveModuleConfig(
+                FRONT_RIGHT_MODULE_DRIVE_MOTOR,
+                FRONT_RIGHT_MODULE_STEER_MOTOR,
+                FRONT_RIGHT_MODULE_STEER_ENCODER,
+                FRONT_RIGHT_MODULE_STEER_OFFSET,
+                FRONT_RIGHT_DRIVE_MOTOR_CONFIG,
+                FRONT_RIGHT_STEER_MOTOR_CONFIG);
+      }
+      return m_frontRightConstants;
+    }
+
+    private SwerveModuleConfig m_backLeftConstants;
+
+    public SwerveModuleConfig getBackLeftConstants() {
+      if (m_backLeftConstants == null) {
+        m_backLeftConstants =
+            new SwerveModuleConfig(
+                BACK_LEFT_MODULE_DRIVE_MOTOR,
+                BACK_LEFT_MODULE_STEER_MOTOR,
+                BACK_LEFT_MODULE_STEER_ENCODER,
+                BACK_LEFT_MODULE_STEER_OFFSET,
+                BACK_LEFT_DRIVE_MOTOR_CONFIG,
+                BACK_LEFT_STEER_MOTOR_CONFIG);
+      }
+      return m_backLeftConstants;
+    }
+
+    private SwerveModuleConfig m_backRightConstants;
+
+    public SwerveModuleConfig getBackRightConstants() {
+      if (m_backRightConstants == null) {
+        m_backRightConstants =
+            new SwerveModuleConfig(
+                BACK_RIGHT_MODULE_DRIVE_MOTOR,
+                BACK_RIGHT_MODULE_STEER_MOTOR,
+                BACK_RIGHT_MODULE_STEER_ENCODER,
+                BACK_RIGHT_MODULE_STEER_OFFSET,
+                BACK_RIGHT_DRIVE_MOTOR_CONFIG,
+                BACK_RIGHT_STEER_MOTOR_CONFIG);
+      }
+      return m_backRightConstants;
+    }
+
+    private SwerveDriveKinematics m_swerveKinematics;
+
+    public synchronized SwerveDriveKinematics getSwerveDriveKinematics() {
+
+      if (m_swerveKinematics == null) {
+        m_swerveKinematics =
+            new SwerveDriveKinematics(
+                new Translation2d(TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0),
+                new Translation2d(TRACKWIDTH_METERS / 2.0, -WHEELBASE_METERS / 2.0),
+                new Translation2d(-TRACKWIDTH_METERS / 2.0, WHEELBASE_METERS / 2.0),
+                new Translation2d(-TRACKWIDTH_METERS / 2.0, -WHEELBASE_METERS / 2.0));
+      }
+      return m_swerveKinematics;
+    }
   }
 }
