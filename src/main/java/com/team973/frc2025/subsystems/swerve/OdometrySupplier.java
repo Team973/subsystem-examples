@@ -3,6 +3,7 @@ package com.team973.frc2025.subsystems.swerve;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
+import com.team973.frc2025.RobotConfig;
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.lib.devices.GreyPigeonIO;
 import com.team973.lib.util.Logger;
@@ -54,7 +55,7 @@ public class OdometrySupplier {
     m_thread.setName("swerve.OdometryPoseSupplier");
     m_thread.setDaemon(false);
 
-    m_driveInfo = RobotInfo.DRIVE_INFO;
+    m_driveInfo = RobotConfig.get().DRIVE_INFO;
 
     m_pigeon = pigeon;
     m_swerveModules = swerveModules;
@@ -93,7 +94,7 @@ public class OdometrySupplier {
         BaseStatusSignal.getLatencyCompensatedValue(m_yawGetter, m_angularVelocity);
     m_swerveOdometry =
         new SwerveDriveOdometry(
-            m_driveInfo.SWERVE_KINEMATICS,
+            m_driveInfo.getSwerveDriveKinematics(),
             Rotation2d.fromDegrees(yawDegrees.magnitude()),
             getPositions());
     m_lastPoseMeters = getPoseMeters();

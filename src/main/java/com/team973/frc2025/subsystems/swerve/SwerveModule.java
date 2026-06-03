@@ -3,10 +3,8 @@ package com.team973.frc2025.subsystems.swerve;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.team973.frc2025.RobotConfig;
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.lib.devices.GreyCANCoder;
 import com.team973.lib.devices.GreyTalonFX;
@@ -39,8 +37,6 @@ public class SwerveModule implements SwerveModuleIO {
 
   private SwerveModuleState m_lastState;
 
-  private final TalonFXConfiguration m_driveMotorConfig;
-
   private final StatusSignal<Angle> m_driveMotorPositionStatusSignal;
   private final StatusSignal<AngularVelocity> m_driveMotorVelocityStatusSignal;
   private final StatusSignal<Angle> m_angleMotorPositionStatusSignal;
@@ -52,7 +48,7 @@ public class SwerveModule implements SwerveModuleIO {
     this.moduleNumber = moduleNumber;
     m_logger = logger;
     m_angleOffset = Rotation2d.fromDegrees(moduleConfig.angleOffset);
-    m_driveInfo = RobotInfo.DRIVE_INFO;
+    m_driveInfo = RobotConfig.get().DRIVE_INFO;
 
     m_driveMechanism =
         new LinearMechanism(m_driveInfo.DRIVE_GEAR_RATIO, m_driveInfo.WHEEL_DIAMETER_METERS);
@@ -72,7 +68,7 @@ public class SwerveModule implements SwerveModuleIO {
             moduleConfig.angleMotorID,
             RobotInfo.CANIVORE_CANBUS,
             logger.subLogger("Angle Motor", 0.1));
-    configAngleMotor();
+    m_angleMotor.setConfig(moduleConfig.angleMotorConfig.getConfig());
 
     /* Drive Motor Config */
     m_driveMotor =
@@ -80,8 +76,8 @@ public class SwerveModule implements SwerveModuleIO {
             moduleConfig.driveMotorID,
             RobotInfo.CANIVORE_CANBUS,
             logger.subLogger("Drive Motor", 0.1));
-    m_driveMotorConfig = m_driveMotor.getCurrentConfig();
-    configDriveMotor();
+    m_driveMotor.setConfig(moduleConfig.driveMotorConfig.getConfig());
+    m_driveMotor.setPosition(0.0);
 
     BaseStatusSignal.waitForAll(0.5, m_angleEncoder.getAbsolutePosition());
     resetToAbsolute();
@@ -108,52 +104,7 @@ public class SwerveModule implements SwerveModuleIO {
   private void configAngleEncoder() {
     var encoderConfig = new CANcoderConfiguration();
     encoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
-    // encoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
     m_angleEncoder.getConfigurator().apply(encoderConfig);
-  }
-
-  private void configAngleMotor() {
-    var motorConfig = m_angleMotor.getCurrentConfig();
-
-    motorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-    motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-
-    motorConfig.Slot0.kP = m_driveInfo.ANGLE_KP;
-    motorConfig.Slot0.kI = m_driveInfo.ANGLE_KI;
-    motorConfig.Slot0.kD = m_driveInfo.ANGLE_KD;
-    motorConfig.Slot0.kS = m_driveInfo.ANGLE_KF;
-
-    motorConfig.CurrentLimits.StatorCurrentLimit = 100.0;
-    motorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-
-    motorConfig.CurrentLimits.SupplyCurrentLimit = 60.0;
-    motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-
-    motorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.02;
-
-    m_angleMotor.setConfig(motorConfig);
-
-    resetToAbsolute();
-  }
-
-  private void configDriveMotor() {
-    m_driveMotorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-    m_driveMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-
-    m_driveMotorConfig.Slot0.kP = m_driveInfo.DRIVE_KP;
-    m_driveMotorConfig.Slot0.kI = m_driveInfo.DRIVE_KI;
-    m_driveMotorConfig.Slot0.kD = m_driveInfo.DRIVE_KD;
-    m_driveMotorConfig.Slot0.kV = m_driveInfo.DRIVE_KF;
-
-    m_driveMotorConfig.CurrentLimits.StatorCurrentLimit = 100.0;
-    m_driveMotorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-    m_driveMotorConfig.CurrentLimits.SupplyCurrentLimit = 60.0;
-    m_driveMotorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-
-    m_driveMotorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.02;
-
-    m_driveMotor.setConfig(m_driveMotorConfig);
-    m_driveMotor.setPosition(0.0);
   }
 
   @Override
@@ -262,7 +213,7 @@ public class SwerveModule implements SwerveModuleIO {
     if (!ignoreJitter) {
       desiredState.angle =
           (Math.abs(desiredState.speedMetersPerSecond)
-                  <= (m_driveInfo.MAX_VELOCITY_METERS_PER_SECOND * 0.01))
+                  <= (m_driveInfo.MAX_LINEAR_VELOCITY_METERS_PER_SECOND * 0.01))
               ? m_lastState.angle
               : desiredState.angle;
     }
@@ -274,16 +225,6 @@ public class SwerveModule implements SwerveModuleIO {
           m_angleMechanism.getRotorRotationFromOutputRotation(desiredState.angle).getRotations());
     }
     m_lastState = desiredState;
-  }
-
-  public void driveBrake() {
-    m_driveMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    m_driveMotor.setConfig(m_driveMotorConfig);
-  }
-
-  public void driveNeutral() {
-    m_driveMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-    m_driveMotor.setConfig(m_driveMotorConfig);
   }
 
   public void log() {

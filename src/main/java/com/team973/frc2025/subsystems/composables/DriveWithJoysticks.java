@@ -1,5 +1,6 @@
 package com.team973.frc2025.subsystems.composables;
 
+import com.team973.frc2025.RobotConfig;
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.frc2025.subsystems.DriveController.RotationControl;
 import com.team973.lib.util.DriveComposable;
@@ -28,7 +29,7 @@ public class DriveWithJoysticks extends DriveComposable {
   private double m_rot = 0.0;
 
   public DriveWithJoysticks() {
-    m_driveInfo = RobotInfo.DRIVE_INFO;
+    m_driveInfo = RobotConfig.get().DRIVE_INFO;
   }
 
   public void setRotationControl(RotationControl rotationControl) {
@@ -62,9 +63,9 @@ public class DriveWithJoysticks extends DriveComposable {
   @Override
   public ChassisSpeeds getOutput(Pose2d currentPose, Rotation2d angularVelocity) {
     final double xSpeed =
-        -MathUtil.applyDeadband(m_xAxis, 0.1) * m_driveInfo.MAX_VELOCITY_METERS_PER_SECOND;
+        -MathUtil.applyDeadband(m_xAxis, 0.1) * m_driveInfo.MAX_LINEAR_VELOCITY_METERS_PER_SECOND;
     final double ySpeed =
-        -MathUtil.applyDeadband(m_yAxis, 0.1) * m_driveInfo.MAX_VELOCITY_METERS_PER_SECOND;
+        -MathUtil.applyDeadband(m_yAxis, 0.1) * m_driveInfo.MAX_LINEAR_VELOCITY_METERS_PER_SECOND;
     Rotation2d currentYaw = currentPose.getRotation();
 
     double rot =

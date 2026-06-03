@@ -1,5 +1,6 @@
 package com.team973.frc2025.subsystems.swerve;
 
+import com.team973.frc2025.RobotConfig;
 import com.team973.frc2025.shared.CrashTracker;
 import com.team973.frc2025.shared.RobotInfo;
 import com.team973.frc2025.subsystems.DriveController;
@@ -32,7 +33,7 @@ public class GreyPoseEstimator implements OdometryReceiver, MegaTagReceiver {
       DriveController m_DriveController,
       OdometrySupplier odometrySupplier,
       Logger logger) {
-    m_driveInfo = RobotInfo.DRIVE_INFO;
+    m_driveInfo = RobotConfig.get().DRIVE_INFO;
 
     m_pigeon = pigeon;
     m_driveController = m_DriveController;
@@ -76,7 +77,7 @@ public class GreyPoseEstimator implements OdometryReceiver, MegaTagReceiver {
       if (m_poseEstimator == null) {
         m_poseEstimator =
             new SwerveDrivePoseEstimator(
-                m_driveInfo.SWERVE_KINEMATICS,
+                m_driveInfo.getSwerveDriveKinematics(),
                 gyroAngle,
                 modulePositions,
                 new Pose2d(0, 0, gyroAngle));

@@ -1,0 +1,118 @@
+{
+  "FEATURE_FLAGS": {
+		"ENABLE_DRIVE:": true
+	},
+	"DRIVE_INFO": {
+    "STATUS_SIGNAL_FREQUENCY": 200,
+    "PIGEON_ID": 1,
+		"FRONT_LEFT_MODULE_DRIVE_MOTOR": 2,
+    "FRONT_LEFT_MODULE_STEER_MOTOR": 3,
+    "FRONT_LEFT_MODULE_STEER_ENCODER": 4,
+    "FRONT_LEFT_MODULE_STEER_OFFSET": 52.053,
+    "FRONT_LEFT_DRIVE_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KI": 0,
+      "KP": 0.38,
+      "KS": 0.24,
+      "KV": 0.123,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "Clockwise_Positive"
+    },
+    "FRONT_LEFT_STEER_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KS": 0.5,
+      "KI": 0,
+      "KP": 4,
+      "KV": 0.15,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "Clockwise_Positive"
+    },
+		"FRONT_RIGHT_MODULE_DRIVE_MOTOR": 8,
+    "FRONT_RIGHT_MODULE_STEER_MOTOR": 9,
+    "FRONT_RIGHT_MODULE_STEER_ENCODER": 10,
+    "FRONT_RIGHT_MODULE_STEER_OFFSET": -16.963,
+    "FRONT_RIGHT_DRIVE_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KI": 0,
+      "KP": 0.38,
+      "KS": 0.24,
+      "KV": 0.123,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "Clockwise_Positive"
+    },
+    "FRONT_RIGHT_STEER_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KS": 0.5,
+      "KI": 0,
+      "KP": 4,
+      "KV": 0.15,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "Clockwise_Positive"
+    },
+    "BACK_LEFT_MODULE_DRIVE_MOTOR": 5,
+    "BACK_LEFT_MODULE_STEER_MOTOR": 6,
+    "BACK_LEFT_MODULE_STEER_ENCODER": 7,
+    "BACK_LEFT_MODULE_STEER_OFFSET": 104.678,
+    "BACK_LEFT_DRIVE_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KI": 0,
+      "KP": 0.38,
+      "KS": 0.24,
+      "KV": 0.123,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "CounterClockwise_Positive"
+    },
+    "BACK_LEFT_STEER_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KS": 0.5,
+      "KI": 0,
+      "KP": 4,
+      "KV": 0.15,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "Clockwise_Positive"
+    },
+    "BACK_RIGHT_MODULE_DRIVE_MOTOR": 11,
+    "BACK_RIGHT_MODULE_STEER_MOTOR": 12,
+    "BACK_RIGHT_MODULE_STEER_ENCODER": 13,
+    "BACK_RIGHT_MODULE_STEER_OFFSET": -48.779,
+    "BACK_RIGHT_DRIVE_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KI": 0,
+      "KP": 0.38,
+      "KS": 0.24,
+      "KV": 0.123,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "CounterClockwise_Positive"
+    },
+    "BACK_RIGHT_STEER_MOTOR_CONFIG": {
+      "KA": 0,
+      "KD": 0,
+      "KS": 0.5,
+      "KI": 0,
+      "KP": 4,
+      "KV": 0.15,
+      "VOLTAGE_CLOSED_LOOP_RAMP_PERIOD": 0,
+      "MOTOR_ROTATION_DIRECTION": "Clockwise_Positive"
+    },
+    // 1/6.98
+    // https://docs.wcproducts.com/welcome/gearboxes/wcp-swerve-x2/general-info/ratio-options
+    // X1 with 11 tooth pinion
+    "DRIVE_GEAR_RATIO": 0.1432664756446991,
+		"ANGLE_GEAR_RATIO": 0.08264462809917356,
+    "WHEEL_DIAMETER_METERS": 0.0975325866,
+    "TRACKWIDTH_METERS": 0.635,
+    "WHEELBASE_METERS": 0.4826,
+    "FULL_WIDTH_METERS": 0.9,
+    "FULL_LENGTH_METERS": 0.9,
+    "BUMPER_HEIGHT_METERS": 0.1,
+    "MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND": 7.33038286, // 420 deg/s measured 22. March
+    "MAX_LINEAR_VELOCITY_METERS_PER_SECOND": 4.0 // Estimated March 28
+	}
+}

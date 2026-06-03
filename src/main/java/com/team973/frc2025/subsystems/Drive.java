@@ -1,7 +1,7 @@
 package com.team973.frc2025.subsystems;
 
+import com.team973.frc2025.RobotConfig;
 import com.team973.frc2025.shared.RobotInfo;
-import com.team973.frc2025.shared.RobotInfo.DriveInfo;
 import com.team973.frc2025.subsystems.swerve.GreyPoseEstimator;
 import com.team973.frc2025.subsystems.swerve.MegaTagSupplier;
 import com.team973.frc2025.subsystems.swerve.OdometrySupplier;
@@ -22,13 +22,13 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Drive extends Subsystem.Stateless {
-  private final RobotInfo.DriveInfo m_driveInfo;
+  private final RobotInfo.DriveInfo m_driveInfo = RobotConfig.get().DRIVE_INFO;
 
-  private static final Translation2d[] MODULE_LOCATIONS = {
-    new Translation2d(DriveInfo.TRACKWIDTH_METERS / 2.0, DriveInfo.WHEELBASE_METERS / 2.0),
-    new Translation2d(DriveInfo.TRACKWIDTH_METERS / 2.0, -DriveInfo.WHEELBASE_METERS / 2.0),
-    new Translation2d(-DriveInfo.TRACKWIDTH_METERS / 2.0, DriveInfo.WHEELBASE_METERS / 2.0),
-    new Translation2d(-DriveInfo.TRACKWIDTH_METERS / 2.0, -DriveInfo.WHEELBASE_METERS / 2.0)
+  private final Translation2d[] MODULE_LOCATIONS = {
+    new Translation2d(m_driveInfo.TRACKWIDTH_METERS / 2.0, m_driveInfo.WHEELBASE_METERS / 2.0),
+    new Translation2d(m_driveInfo.TRACKWIDTH_METERS / 2.0, -m_driveInfo.WHEELBASE_METERS / 2.0),
+    new Translation2d(-m_driveInfo.TRACKWIDTH_METERS / 2.0, m_driveInfo.WHEELBASE_METERS / 2.0),
+    new Translation2d(-m_driveInfo.TRACKWIDTH_METERS / 2.0, -m_driveInfo.WHEELBASE_METERS / 2.0)
   };
 
   private final Logger m_logger;
@@ -66,9 +66,8 @@ public class Drive extends Subsystem.Stateless {
     m_pigeon = pigeon;
     m_driveController = driveController;
     m_logger = logger;
-    m_driveInfo = RobotInfo.DRIVE_INFO;
 
-    System.out.println("Front_left_constants" + m_driveInfo.FRONT_LEFT_CONSTANTS);
+    System.out.println("Front_left_constants" + m_driveInfo.getFrontLeftConstants());
     m_swerveModules = new SwerveModuleIO[] {frontLeft, frontRight, backLeft, backRight};
 
     m_odometrySupplier =
@@ -171,7 +170,7 @@ public class Drive extends Subsystem.Stateless {
   /* Used by Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        desiredStates, m_driveInfo.MAX_VELOCITY_METERS_PER_SECOND);
+        desiredStates, m_driveInfo.MAX_LINEAR_VELOCITY_METERS_PER_SECOND);
 
     double states[] = new double[8];
     int index = 0;
@@ -212,18 +211,6 @@ public class Drive extends Subsystem.Stateless {
   public void resetModules() {
     for (SwerveModuleIO mod : m_swerveModules) {
       mod.resetToAbsolute();
-    }
-  }
-
-  public void enableBrakeMode() {
-    for (var mod : m_swerveModules) {
-      mod.driveBrake();
-    }
-  }
-
-  public void disableBrakeMode() {
-    for (var mod : m_swerveModules) {
-      mod.driveNeutral();
     }
   }
 
@@ -281,7 +268,7 @@ public class Drive extends Subsystem.Stateless {
         new ChassisSpeeds(twist_vel.dx / 0.03, twist_vel.dy / 0.03, twist_vel.dtheta / 0.03);
 
     SwerveModuleState[] swerveModuleStates =
-        m_driveInfo.SWERVE_KINEMATICS.toSwerveModuleStates(updated_chassis_speeds);
+        m_driveInfo.getSwerveDriveKinematics().toSwerveModuleStates(updated_chassis_speeds);
 
     setModuleStates(swerveModuleStates);
   }

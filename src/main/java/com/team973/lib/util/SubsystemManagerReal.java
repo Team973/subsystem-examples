@@ -8,38 +8,34 @@ import com.team973.lib.devices.GreyPigeonIO;
 
 public class SubsystemManagerReal extends SubsystemManager {
   private final GreyPigeonIO m_pigeon;
-  private final DriveController m_driveController;
 
   public SubsystemManagerReal(Logger logger) {
     super(logger);
 
     m_pigeon =
         new GreyPigeon(
-            logger.subLogger("pigeon"), RobotInfo.DRIVE_INFO.PIGEON_ID, RobotInfo.CANIVORE_CANBUS);
-
-    Logger driveLogger = logger.subLogger("drive", 0.05);
-
-    m_driveController =
-        new DriveController(
-            logger,
-            new SwerveModule(
-                0, RobotInfo.DRIVE_INFO.FRONT_LEFT_CONSTANTS, driveLogger.subLogger("swerve/mod0")),
-            new SwerveModule(
-                1,
-                RobotInfo.DRIVE_INFO.FRONT_RIGHT_CONSTANTS,
-                driveLogger.subLogger("swerve/mod1")),
-            new SwerveModule(
-                2, RobotInfo.DRIVE_INFO.BACK_LEFT_CONSTANTS, driveLogger.subLogger("swerve/mod2")),
-            new SwerveModule(
-                3, RobotInfo.DRIVE_INFO.BACK_RIGHT_CONSTANTS, driveLogger.subLogger("swerve/mod3")),
-            m_pigeon);
+            logger.subLogger("pigeon"),
+            m_robotInfo.DRIVE_INFO.PIGEON_ID,
+            RobotInfo.CANIVORE_CANBUS);
   }
 
   public GreyPigeonIO getPigeon() {
     return m_pigeon;
   }
 
-  public DriveController getDriveController() {
-    return m_driveController;
+  public DriveController initDriveController() {
+    Logger driveLogger = getLogger().subLogger("drive");
+    RobotInfo.DriveInfo driveInfo = m_robotInfo.DRIVE_INFO;
+
+    return new DriveController(
+        driveLogger,
+        new SwerveModule(
+            0, driveInfo.getFrontLeftConstants(), driveLogger.subLogger("swerve/mod0")),
+        new SwerveModule(
+            1, driveInfo.getFrontRightConstants(), driveLogger.subLogger("swerve/mod1")),
+        new SwerveModule(2, driveInfo.getBackLeftConstants(), driveLogger.subLogger("swerve/mod2")),
+        new SwerveModule(
+            3, driveInfo.getBackRightConstants(), driveLogger.subLogger("swerve/mod3")),
+        m_pigeon);
   }
 }
